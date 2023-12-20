@@ -83,6 +83,7 @@ void WebApiDeviceClass::onDeviceAdminGet(AsyncWebServerRequest* request)
     display["screensaver"] = config.Display.ScreenSaver;
     display["contrast"] = config.Display.Contrast;
     display["language"] = config.Display.Language;
+    display["diagramduration"] = config.Display.DiagramDuration;
 
     JsonArray leds = root.createNestedArray("led");
     for (uint8_t i = 0; i < PINMAPPING_LED_COUNT; i++) {
@@ -178,9 +179,9 @@ void WebApiDeviceClass::onDeviceAdminPost(AsyncWebServerRequest* request)
     config.Display.ScreenSaver = root["display"]["screensaver"].as<bool>();
     config.Display.Contrast = root["display"]["contrast"].as<uint8_t>();
     config.Display.Language = root["display"]["language"].as<uint8_t>();
+    config.Display.DiagramDuration = root["display"]["diagramduration"].as<uint32_t>();
 
     for (uint8_t i = 0; i < PINMAPPING_LED_COUNT; i++) {
-        Serial.println(root["led"][i]["brightness"].as<uint8_t>());
         config.Led_Single[i].Brightness = root["led"][i]["brightness"].as<uint8_t>();
         config.Led_Single[i].Brightness = min<uint8_t>(100, config.Led_Single[i].Brightness);
     }
@@ -190,6 +191,7 @@ void WebApiDeviceClass::onDeviceAdminPost(AsyncWebServerRequest* request)
     Display.enableScreensaver = config.Display.ScreenSaver;
     Display.setContrast(config.Display.Contrast);
     Display.setLanguage(config.Display.Language);
+    Display.Diagram().updatePeriod();
 
     Configuration.write();
 
