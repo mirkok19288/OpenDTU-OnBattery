@@ -141,7 +141,7 @@ class VictronSmartShuntStats : public BatteryStats {
         void getLiveViewData(JsonVariant& root) const final;
         void mqttPublish() const final;
 
-        void updateFrom(VeDirectShuntController::veShuntStruct const& shuntData);
+        void updateFrom(VeDirectShuntController::data_t const& shuntData);
 
     private:
         float _current;
