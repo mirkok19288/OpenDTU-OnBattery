@@ -8,6 +8,12 @@
             "irq": 16,
             "en": 4,
             "cs": 5
+        "victron": {
+            "rx": 22,
+            "tx": -1,
+            "rx2": 23,
+            "tx2": -1
+            
         },
         "eth": {
             "enabled": false
